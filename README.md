@@ -1,7 +1,9 @@
 # share_filter
 
 This repository contains Python programs implementating bloom filters for the purposes of tracking partial 
-proof of work submissions. For blog containing background information: 
+proof of work submissions from mining pool clients. 
+
+For blog containing background information: <insert URL here>
 
 To run you will need to install Python v2.7 or later.
 
