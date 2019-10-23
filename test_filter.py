@@ -9,7 +9,7 @@ import time
 
 # Progress Bar
 def update_progress(job_title, progress):
-    length = 100 # modify this to change the length
+    length = 100                                                      # modify this to change the length
     block = int(round(length*progress))
     msg = "\r{0}: [{1}] {2}%".format(job_title, "#"*block + "-"*(length-block), round(progress*100, 4))
     if progress >= 1: msg += " DONE\r\n"
@@ -17,7 +17,7 @@ def update_progress(job_title, progress):
     sys.stdout.flush()
 
 # 
-def test_tracker_size(trials, nonce_range, false_pos_prob):                 # tests bloom filter for random nonce values from 1 to N 
+def test_tracker_size(trials, nonce_range, false_pos_prob):           # Tests bloom filter for random nonce values from 1 to N 
     start = time.time()
     bloomf = BloomFilter(trials, false_pos_prob)
 
@@ -30,7 +30,7 @@ def test_tracker_size(trials, nonce_range, false_pos_prob):                 # te
     for i in range(trials):
         update_progress("Testing share_tracker memory footprint: ", float(i)/trials)
         nonce = random.randint(1, nonce_range)                        # Create dummy nonce inputs 
-        item = sha256_int(create_block_template(nonce))               # Item is the hash of the nonce (would be hash of block header in real thing)
+        item = sha256_int(create_block_header(nonce))               # Item is the hash of the nonce (would be hash of block header in real thing)
 
         if bloomf.check(item):                                        # Check hash against Bloom Filter
            duplicates.append(item)                                    # Add to list of duplicate submissions                      
@@ -48,8 +48,8 @@ def test_tracker_size(trials, nonce_range, false_pos_prob):                 # te
     falseposperc = float(len(false_positive))/float(trials)*100
     actual_badhashperc =  badhashperc - falseposperc
 
-    list_size = sys.getsizeof(hash_list)                               # Size of hash list
-    bloom_size = sys.getsizeof(bloomf)                                 # Size of Bloom filter
+    list_size = sys.getsizeof(hash_list)                              # Size of hash list
+    bloom_size = sys.getsizeof(bloomf)                                # Size of Bloom filter
     ratio = bloom_size/list_size
 
     # Print results in command window 
@@ -70,6 +70,8 @@ def test_tracker_size(trials, nonce_range, false_pos_prob):                 # te
     else: 
         return ('Test of %s trial submissions finished in %s seconds' % (trials, finish - start)) 
 
+
+
 def test_tracker_speed(trials, nonce_range, false_pos_prob):          # Tests bloom filter for random nonce values from 1 to nonce_range 
     start = time.time()
     bloomf = BloomFilter(trials, false_pos_prob)                      # construct Bloom filter
@@ -84,7 +86,7 @@ def test_tracker_speed(trials, nonce_range, false_pos_prob):          # Tests bl
     for i in range(trials):
         update_progress("Testing share_tracker speed: ", 0.5*float(i)/trials)
         nonce = random.randint(1, nonce_range)                        # Create dummy nonce inputs 
-        item = sha256_int(create_block_template(nonce))               # Item is the hash of the block header including nonce 
+        item = sha256_int(create_block_header(nonce))                 # Item is the hash of the block header including nonce 
 
         if bloomf.check(item):                                        # Check hash against Bloom Filter
            continue                                                   # Discard duplicate submissions                      
@@ -98,7 +100,7 @@ def test_tracker_speed(trials, nonce_range, false_pos_prob):          # Tests bl
     for i in range(trials):
         update_progress("Testing share_tracker speed: ", 0.5*float(i)/trials+0.5)
         nonce = random.randint(1, nonce_range)                        # Create dummy nonce inputs 
-        item = sha256_int(create_block_template(nonce))               # Item is the hash of the block header including nonce 
+        item = sha256_int(create_block_header(nonce))               # Item is the hash of the block header including nonce 
 
         if item in hash_list:                                         # Check hash against hash list
            continue                                                   # Discard  duplicate submissions                      
@@ -124,7 +126,7 @@ def test_tracker_speed(trials, nonce_range, false_pos_prob):          # Tests bl
 
 # Test input data
 n_range = 1000000000
-trls = [5000000, 1000000]
+trls = [50000, 100000, 500000, 1000000]
 f_prob = [0.01, 0.001, 0.0005]
 
 # Generate test size results
