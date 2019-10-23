@@ -11,21 +11,12 @@ import random
 from bitstring import BitArray     
 
 
-
-def SHA256(input):
-    bin_input = "{0:b}".format(input)  #Converts to binary before hashing
-
-    return hashlib.sha256(binput.encode()).hexdigest()
-
-def sha256_int(inp):
-
-    #bin_input = "{0:b}".format(inp)  #Converts to binary before hashing
+def sha256_int(inp):                        # Return SHA256 hash of input in integer format 
 
     return int(hashlib.sha256(inp.encode()).hexdigest(), 16)
 
 
-
-def multi_sha256(input, i):                 # SHA256 with salt (integer digest)
+def multi_sha256(input, i):                 # Multiple rounds of SHA256 
 
     if isinstance(input, int):
         inputseed = str(input)
@@ -144,7 +135,7 @@ def share_tracker(blockheader_submission):
 # Create block template from single nonce input 
 # Note: In practice the block constructor will use the extra nonce to recalculate the Merkle root, this is just a 
 
-def create_block_template(nonce):                                                           # Creates block header bytestring ready to be hashed (Elements hard coded from block 582995)
+def create_block_header(nonce):                                                           # Creates block header bytestring ready to be hashed (Elements hard coded from block 582995)
     version = '0x20000000'                                                                  # Version number (HARD CODED)
     prev_block_hash = '0x000000000000000008811f50b64684257e8821114783e245af1e7f6a0909ef99'  # Hash of previous block header (HARD CODED)
     merkle_root = '0xebd2fb876da201b8788f1df43518f75e48d0a99cad415a9b55d7ab31a56e24ee'      # Merkle root (HARD CODED)
