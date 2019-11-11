@@ -13,4 +13,4 @@ To run you will need to install Python v2.7 or later.
 
 ‘bloom_filter_example.py’ is an example using the bloom filter class on a set of randomly generated words 
 
-© 2019 nChain Limited. All rights reserved. This article is provided without any warranties whatsoever and shall not result in the grant of any license, whether implied or otherwise. nChain Limited shall not be liable in any way for the use of the information provided herein.
+© 2019 nChain Limited. All rights reserved. This software is provided without any warranties and shall not result in the grant of any license, whether implied or otherwise. nChain Limited shall not be liable in any way for the use of the information provided herein.
