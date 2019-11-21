@@ -37,8 +37,7 @@ def test_tracker_size(trials, nonce_range, false_pos_prob):           # Tests bl
                 false_positive.append(item)                           # Item is a false positive 
         else:
             bloomf.add(item)                                          # Add item to bloom filter
-
-        hash_table.update({str(item): i})                                        # Add submission to list
+        hash_table.update({str(item): i})                             # Add submission to dictionary
 
     badhashperc = float(len(duplicates))/float(trials)*100
     falseposperc = float(len(false_positive))/float(trials)*100
