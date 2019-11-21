@@ -11,26 +11,23 @@ import random
 from bitstring import BitArray     
 
 
-def sha256_int(inp):                        # Return SHA256 hash of input in integer format 
-
+def sha256_int(inp):                                        # Return SHA256 hash of input in integer format 
     return int(hashlib.sha256(inp.encode()).hexdigest(), 16)
 
 
-def multi_sha256(input, i):                 # Multiple rounds of SHA256 
+def multi_sha256(input, i):                                 # Multiple rounds of SHA256 
 
     if isinstance(input, int):
         inputseed = str(input)
     else:
         raise Exception('input must be integer or string!')    
-
     b = hashlib.sha256(inputseed.encode()).hexdigest()
     for k in range(i):
         b = hashlib.sha256(b.encode()).hexdigest()
-
+    b = b[0:10]                                             # Use first 8 bytes of hash digest to reduce CPU cost
     return int(b, 16)
 
-# Bloom Filter Class (Modified hash functions)
-class BloomFilter(object): 
+class BloomFilter(object):                                  # Bloom Filter Class (Modified hash functions)
   
     ''' 
     Class for Bloom filter, using SHA256 hash function 
@@ -53,10 +50,10 @@ class BloomFilter(object):
         self.hash_count = self.get_hash_count(self.size,items_count) 
   
         # Bit array of given size 
-        self.bit_array = BitArray(self.size)      # MODIFICATION!! BitArray  
+        self.bit_array = BitArray(self.size)      
   
         # initialize all bits as 0 
-        self.bit_array.set(0)      # BitArray
+        self.bit_array.set(0)      
   
     def add(self, item): 
         ''' 
@@ -118,24 +115,9 @@ class BloomFilter(object):
         '''
         k = (m/n) * math.log(2) 
 
-        return int(k) 
+        return int(k)  
 
-
-
-def share_tracker(blockheader_submission):
-    if BloomFilter.check(blockheader_submission)==False:
-       BloomFilter.add(blockheader_submission)
-       return True
-    else:
-        return False    
-
-    
-
-
-# Create block template from single nonce input 
-# Note: In practice the block constructor will use the extra nonce to recalculate the Merkle root, this is just a 
-
-def create_block_header(nonce):                                                           # Creates block header bytestring ready to be hashed (Elements hard coded from block 582995)
+def create_block_header(nonce):                                                             # Creates block header bytestring ready to be hashed (Elements hard coded from block 582995)
     version = '0x20000000'                                                                  # Version number (HARD CODED)
     prev_block_hash = '0x000000000000000008811f50b64684257e8821114783e245af1e7f6a0909ef99'  # Hash of previous block header (HARD CODED)
     merkle_root = '0xebd2fb876da201b8788f1df43518f75e48d0a99cad415a9b55d7ab31a56e24ee'      # Merkle root (HARD CODED)
@@ -153,7 +135,4 @@ def create_block_header(nonce):                                                 
     block_header = bin_version + bin_prev_block_hash + bin_merkle_root + bin_timestamp + bin_nBits + bin_nNonce
 
     return block_header
-
-
-
 
