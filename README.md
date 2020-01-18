@@ -1,9 +1,9 @@
 # share_filter
 
 share_filter is a Python program implementating bloom filter enabled tracking of partial 
-proof of work submissions. Note, this is a proof of concept used to obtain empirical data supporting research on the use of bloom filters for effieicnt set membership tests.
+proof of work submissions. Note, this is a proof of concept used to obtain empirical data supporting research on the use of bloom filters for efficeicnt set membership tests.
 
-For blog containing background information: https://medium.com/@alexandertennysonmackay/filtering-shares-scaling-mining-pool-software-with-boom-filters-949b1ae91ea1.
+Blog containing background information: https://medium.com/@alexandertennysonmackay/filtering-shares-scaling-mining-pool-software-with-boom-filters-949b1ae91ea1.
 
 To run you will need to install Python v2.7 or later.
 
