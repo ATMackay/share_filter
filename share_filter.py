@@ -4,6 +4,7 @@
 # run  $ easy_install bitstring
 # Or alternatively
 # run  $ pip install bitstring
+import time, sys
 import math
 import numpy as np
 import hashlib
@@ -22,10 +23,12 @@ def multi_sha256(input, i):                                 # Multiple rounds of
     else:
         raise Exception('input must be integer or string!')    
     b = hashlib.sha256(inputseed.encode()).hexdigest()
-    for k in range(i):
+    for k in range(i):  
         b = hashlib.sha256(b.encode()).hexdigest()
     b = b[0:10]                                             # Use first 8 bytes of hash digest to reduce CPU cost
-    return int(b, 16)
+    yield int(b,16)
+
+
 
 class BloomFilter(object):                                  # Bloom Filter Class (Modified hash functions)
   
@@ -66,7 +69,7 @@ class BloomFilter(object):                                  # Bloom Filter Class
             # i work as seed to SHA256 hash function 
             # With different seed, digest created is different 
 
-            digest = multi_sha256(item,i) % self.size  
+            digest = next(multi_sha256(item,i)) % self.size  
             digests.append(digest) 
   
             # set the bit True in bit_array 
@@ -77,7 +80,7 @@ class BloomFilter(object):                                  # Bloom Filter Class
         Check for existence of an item in filter 
         '''
         for i in range(self.hash_count): 
-            digest = multi_sha256(item,i) % self.size   
+            digest = next(multi_sha256(item,i)) % self.size   
             if self.bit_array[digest] == False: 
   
                 # if any of bit is False then,its not present 
