@@ -1,11 +1,5 @@
 # Python program for testing share_filter against random input data
 from share_filter import *
-import numpy as np
-import hashlib
-import random
-import sys
-import time
-
 
 # Progress Bar
 def update_progress(job_title, progress):
@@ -140,7 +134,7 @@ def main(size, speed):
 
 
 if __name__== "__main__":
-    main(True, True)
+    main(True, False)
 
 
 
